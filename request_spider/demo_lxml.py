@@ -52,7 +52,7 @@ text = '''
 
 
 # 5.多属性匹配，使用and链接
-text1='''
+text1 = '''
 <div>
     <ul>
          <li class="aaa" name="item"><a href="link1.html">第一个</a></li>
@@ -61,6 +61,31 @@ text1='''
  </div>
 '''
 
-html = etree.HTML(text1 ,etree.HTMLParser())
-result = html.xpath('//li[@class="aaa" and @name="item"]/a/text()')
-print(result)
+# html = etree.HTML(text1 ,etree.HTMLParser())
+# result = html.xpath('//li[@class="aaa" and @name="item"]/a/text()')
+# print(result)
+
+# 6.按序选择
+text2 = """
+<div>
+    <ul>
+         <li class="aaa" name="item"><a href="link1.html">第一个</a></li>
+         <li class="aaa" name="item"><a href="link1.html">第二个</a></li>
+         <li class="aaa" name="item"><a href="link1.html">第三个</a></li>
+         <li class="aaa" name="item"><a href="link1.html">第四个</a></li> 
+     </ul>
+ </div>
+"""
+
+html = etree.HTML (text2, etree.HTMLParser ())
+result = html.xpath ('//li[@class="aaa"]/a/text()')  # 获取所有li节点下的a节点内容
+result1 = html.xpath ('//li[1][@class="aaa"]/a/text()')  # 获取第一个
+result2 = html.xpath ('//li[last()][@class="aaa"]/a/text()')  # 获取最后一个
+result3 = html.xpath ('//li[position()>2 and position()<4][contains(@class,"aaa")]/a/text()')  # 获取第三个
+result4 = html.xpath ('//li[last()-2][contains(@class,"aaa")]/a/text()')  # 获取倒数第三个
+print (result)
+print (result1)
+print (result2)
+print (result3)
+print (result4)
+
